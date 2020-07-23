@@ -4,7 +4,7 @@ const CounterOutput = (props) => {
 
     return(
         <div>
-            Current Counter: {props.value}
+            <h3>{props.value}</h3>
         </div>
     )
 }

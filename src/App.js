@@ -1,16 +1,24 @@
 import React from 'react';
 import './App.css';
-import logo from './logo.svg';
-import Counter from "./container/Counter";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import HeaderComponent from "./component/HeaderComponent";
+import FooterComponent from "./component/FooterComponent";
 
 function App() {
   return (
-      <div className="App">
-          <header className="App-header">
-              <img src={logo} className="App-logo" alt="logo" />
-          <Counter/>
-          </header>
-      </div>
+      <>
+          <HeaderComponent/>
+          <div className="container">
+              <div className="row mt-5">
+                  <div className="col">
+                      <div className="responsive">
+
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <FooterComponent/>
+      </>
   );
 }
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Users from "../views/Users";
+import Users from "../views/Food";
 class Navbar extends React.Component {
     render() {
         const styleLink = {

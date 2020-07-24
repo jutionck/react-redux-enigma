@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 
-class Users extends React.Component {
+class Food extends React.Component {
 
     componentDidMount() {
         axios.get(`/food`).then((res) => {
@@ -83,4 +83,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Users);
+export default connect(mapStateToProps, mapDispatchToProps)(Food);

@@ -1,17 +1,14 @@
 import React, {Component} from 'react';
 import { BrowserRouter as Router, Redirect, withRouter, Switch, Route } from "react-router-dom";
-import HomePage from "../page/HomePage";
-import UserContainer from "../page/users/UserContainer";
-import LoginContainer from "../page/auth/LoginContainer";
+import HomePage from "../views/HomePage";
+import Food from "../views/Food";
 import NavbarComponent from "./NavbarComponent";
-import NotFound from "../page/404/NotFound";
-import FoodContainer from "../page/foods/FoodContainer";
+import LoginContainer from "../views/auth/LoginContainer";
+import NotFound from "../views/404/NotFound";
 
 const routes = [
     { id: 1, path:"/home", component: HomePage },
-    { id: 2, path:"/user", component: UserContainer },
-    { id: 3, path:"/food", component: FoodContainer },
-    { id: 4, path:"/food/add", component: FoodContainer },
+    { id: 2, path:"/food", component: Food },
 ];
 
 
@@ -75,11 +72,10 @@ class HeaderComponent extends Component {
                         />
                         {routeList}
                         <Route path="*">
-                            <NotFound/>
+                            <NotFound />
                         </Route>
                     </Switch>
                 </div>
-                {/*<FooterComponent auth={this.state.auth}/>*/}
             </div>
         );
     }

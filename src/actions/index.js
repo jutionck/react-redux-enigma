@@ -1,4 +1,4 @@
-export const userAction = (user, body) => {
+export const userAction = (user) => {
     return {
         type: 'USER',
         payload: user

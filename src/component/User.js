@@ -1,53 +1,86 @@
 import React, {Component} from 'react';
 import {userAction} from "../actions";
-import {userService} from "../services";
+import {getUsers, userService} from "../services";
 import {connect} from "react-redux";
+import UserAddForm from "./UserAddForm";
+import Userlist from "./Userlist";
+import Swal from 'sweetalert2'
 
 class User extends Component {
 
-    state = {
-        title: "",
-        body: ""
-    }
-
-    onSubmit = async () => {
-        const response = await userService(this.state.title, this.state.body)
-        const data = await response.json()
-        console.log(data)
-        if(response.status === 201) {
-            this.props.userAction(this.state.title, this.state.body)
-            alert('created' + data.title)
-        } else{
-            alert('created failed')
+    constructor(props) {
+        super(props);
+        this.state = {
+            users : [],
+            userID: "",
+            username: "",
+            firstName: "",
+            lastName: "",
+            password: "",
+            isLoading: true
         }
     }
 
-    onInputTitleChange = async (event) => {
-        await this.setState({
-            title: event.target.value
+    loadData = () => {
+        getUsers().then(res => {
+            this.setState({
+                ...this.state, users: res.data, isLoading: false
+            })
         })
     }
 
-    onInputBodyChange = async (event) => {
-        await this.setState({
-            body: event.target.value
+    onSubmit = async () => {
+        const form = {
+            username: this.state.username,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            password: this.state.password
+        }
+        userService(form).then(res => {
+            if(res.status == '200') {
+                alert("User created!")
+                Swal.fire(
+                    'Good job!',
+                    'Login Success!',
+                    'success'
+                ).then(r => {
+                    this.setState({
+                    username: "",
+                    firstName: "",
+                    lastName: "",
+                    password: ""
+                })
+                    this.loadData()
+                })
+            }
         })
+    }
+
+    componentDidMount() {
+        this.loadData()
+    }
+
+    handleChangeInput = (event) => {
+        let name = event.target.name
+        this.setState({
+            ...this.state,[name]:event.target.value
+        });
+
     }
 
     render() {
         return (
-            <div className="row">
-                <div className="col-sm-6">
-                    <div className="form-group">
-                        <label htmlFor="">Title</label>
-                        <input type="text" value={this.state.title} name="Title" onChange={this.onInputTitleChange}/><br/>
-                        <label htmlFor="">Deskripsi</label>
-                        <input type="text" value={this.state.body} name="Description" onChange={this.onInputBodyChange}/><br/>
-                        <button onClick={this.onSubmit}>Submit</button>
-                    </div>
-                </div>
-
-            </div>
+            <>
+                <Userlist users={this.state.users} isLoading={this.state.isLoading}/>
+                <UserAddForm
+                    username={this.state.username}
+                    firstName={this.state.firstName}
+                    lastName={this.state.lastName}
+                    password={this.state.password}
+                    handleChangeInput={this.handleChangeInput}
+                    onSubmit={this.onSubmit}
+                />
+            </>
         );
     }
 }

@@ -1,15 +1,42 @@
 import React, { Component } from 'react';
-import './App.css'
 import PostForm from './PostForm';
 import AllPost from './AllPost';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
     render() {
         return (
-            <div className="App">
-                <PostForm />
-                <AllPost />
-            </div>
+            <>
+                <div className="bg-yellow">
+                    <h2 className="center bg">CURD Redux</h2>
+                </div>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-4">
+                            <div className="card mt-5">
+                                <div className="card-header">
+                                    User Form
+                                </div>
+                                <div className="card-body">
+                                    <PostForm />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div className="col-lg-8">
+                            <div className="card mt-5">
+                                <div className="card-header">
+                                    User List
+                                </div>
+                                <div className="card-body">
+                                    <AllPost />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </>
         );
     }
 }

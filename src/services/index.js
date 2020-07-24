@@ -6,17 +6,17 @@ const getUsers = async () => {
 }
 
 
-const userService = (title, body) => {
-    return fetch("https://jsonplaceholder.typicode.com/posts", {
-        method: 'POST',
+const deleteUser = async (userID) => {
+    const user = await fetch(baseUrl + `/${userID}`, {
+        method: 'DELETE',
         headers: {
-            'Content-Type': 'application/json',
-            body: JSON.stringify({
-                'title':title,
-                'body': body
-            }),
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
         }
     })
+
+    return user;
 }
 
-export {getUsers, userService}
+
+export {getUsers, deleteUser}

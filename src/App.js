@@ -1,25 +1,25 @@
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import HeaderComponent from "./component/HeaderComponent";
-import FooterComponent from "./component/FooterComponent";
+import { BrowserRouter,Route} from 'react-router-dom'
+import User from "./component/User";
+import {connect} from "react-redux";
 
 function App() {
   return (
-      <>
-          <HeaderComponent/>
-          <div className="container">
-              <div className="row mt-5">
-                  <div className="col">
-                      <div className="responsive">
+      <div>
+          <BrowserRouter>
+              <Route path='/' exact component={User}/>
+          </BrowserRouter>
 
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <FooterComponent/>
-      </>
+      </div>
   );
 }
 
-export default App;
+export const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps)(App);

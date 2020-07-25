@@ -5,6 +5,19 @@ const getServiceUsers = async () => {
     return  users;
 };
 
+const userService = async (form) => {
+    const users = await fetch('/user', {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(form)
+    })
+
+    return await users.json()
+}
+
 const deleteServiceUser = async (id) => {
     const users = await fetch('/user' + `/${id}`, {
         method: 'DELETE',
@@ -34,4 +47,4 @@ const updateServiceUser = async (form) => {
 
 
 
-export {getServiceUsers, deleteServiceUser, updateServiceUser}
+export {getServiceUsers, userService, deleteServiceUser, updateServiceUser}

@@ -1,25 +1,24 @@
 import React from "react";
 import { connect } from "react-redux";
 import Table from "react-bootstrap/Table";
-import {deleteServiceUser, getServiceUsers, updateServiceUser} from "../../services/userService";
+import {deleteServiceUser, getServiceUsers, updateServiceUser, userService} from "../../services/userService";
 import  {faPlus,faEdit, faTrash} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Swal from 'sweetalert2'
-import UserModalUpdate from "./UserModalUpdate";
-import Button from "react-bootstrap/Button";
+import UserAddForm from "./UserAddForm";
 
 class User extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            show: false,
-            delete: false,
+            users : [],
             userID: "",
             username: "",
             firstName: "",
             lastName: "",
             password: "",
+            isLoading: true
         }
     }
 
@@ -31,12 +30,45 @@ class User extends React.Component {
         })
     }
 
+    onSubmit = async () => {
+        const form = {
+            username: this.state.username,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            password: this.state.password
+        }
+        userService(form).then(res => {
+            if(res.status === 200) {
+                Swal.fire(
+                    'Good job!',
+                    'Create User Success!',
+                    'success'
+                ).then(r => {
+                    this.setState({
+                        username: "",
+                        firstName: "",
+                        lastName: "",
+                        password: ""
+                    })
+                })
+            }
+        })
+    }
+
+    handleChangeInput = (event) => {
+        let name = event.target.name
+        console.log(name)
+        this.setState({
+            ...this.state, [name]:event.target.value
+        });
+
+    }
+
     componentDidMount() {
         this.loadData()
     }
 
-    removeGenre = (id) => {
-        // const onDelete = window.confirm(`Delete user with id ${id}`);
+    removeUser = (id) => {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -64,7 +96,7 @@ class User extends React.Component {
 
     render() {
         const listUser = this.props.users.map((user, index) => (
-            <tr>
+            <tr key={index}>
                 <td>{index+1}</td>
                 <td>{user.userID}</td>
                 <td>{user.username}</td>
@@ -73,7 +105,7 @@ class User extends React.Component {
                 <td>{user.password}</td>
                 <td>
                     <button className="btn btn-sm btn-danger"
-                            onClick={() => this.removeGenre(user.userID)}
+                            onClick={() => this.removeUser(user.userID)}
                     >
                         <FontAwesomeIcon icon={faTrash} />
                     </button>
@@ -88,38 +120,47 @@ class User extends React.Component {
                         <li className="breadcrumb-item active" aria-current="page">User List</li>
                     </ol>
                 </nav>
-                <div className="card">
-                    <div className="card-header bg-yellow">
-                        <div className="row">
-                            <div className="col">
+                <div className="row">
+                    <div className="col-lg-4">
+                        <UserAddForm
+                            username={this.state.username}
+                            firstName={this.state.firstName}
+                            lastName={this.state.lastName}
+                            password={this.state.password}
+                            handleChangeInput={this.handleChangeInput}
+                            onSubmit={this.onSubmit}
+                        />
+                    </div>
+                    <div className="col-lg-8">
+                        <div className="card">
+                            <div className="card-header bg-yellow">
                                 <strong> User List </strong>
                             </div>
-                            <div className="col text-right">
-
+                            <div className="card-body mb-3">
+                                <div className="table-responsive">
+                                    <Table striped bordered hover>
+                                        <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>UserID</th>
+                                            <th>Username</th>
+                                            <th>Firstname</th>
+                                            <th>Lastname</th>
+                                            <th>Password</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            {listUser}
+                                        </tbody>
+                                    </Table>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className="card-body mb-3">
-                        <div className="embed-responsive">
-                            <Table striped bordered hover>
-                                <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>UserID</th>
-                                    <th>Username</th>
-                                    <th>Firstname</th>
-                                    <th>Lastname</th>
-                                    <th>Password</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    {listUser}
-                                </tbody>
-                            </Table>
-                        </div>
-                    </div>
+
                 </div>
+
             </>
         );
     }

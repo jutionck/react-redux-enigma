@@ -1,0 +1,29 @@
+footer.page-footer {
+    bottom: 0;
+    color: #000000;
+    position: fixed;
+    width: 100%;
+}
+.blue {
+    background-color: #f9a927 !important;
+}
+.font-small {
+    font-size: .9rem;
+}
+.blue {
+    background-color: #f9a927 !important;
+}
+article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+    display: block;
+}
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+user agent stylesheet
+footer {
+    display: block;
+}
+body {
+    font-family: "Roboto",sans-serif;
+    font-weight: 300;
+}

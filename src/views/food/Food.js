@@ -1,19 +1,19 @@
 import React from "react";
-import axios from "axios";
 import { connect } from "react-redux";
 import Table from "react-bootstrap/Table";
-import {Link} from "react-router-dom";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {getServiceFoods} from "../../services/foodService";
 
 class Food extends React.Component {
 
-    componentDidMount() {
-        axios.get(`/food`).then((res) => {
+    loadData = () => {
+        getServiceFoods().then(res => {
             const foods = res.data.data;
-            console.log(foods)
             this.props.GetFood(foods);
-        });
+        })
+    }
+
+    componentDidMount() {
+        this.loadData()
     }
 
     render() {
@@ -28,6 +28,7 @@ class Food extends React.Component {
                 <td>{food.foodStock}</td>
             </tr>
         ));
+
         return (
             <>
                 <nav aria-label="breadcrumb">
@@ -47,8 +48,8 @@ class Food extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="card-body">
-                        <Link to="/food/add" className="btn btn-yellow-2 mb-3"><FontAwesomeIcon icon={faPlus} /></Link>
+                    <div className="card-body mb-3">
+                        {/*<Link to="/food/add" className="btn btn-yellow-2 mb-3"><FontAwesomeIcon icon={faPlus} /></Link>*/}
                         <div className="embed-responsive">
                             <Table striped bordered hover>
                                 <thead>
@@ -62,7 +63,7 @@ class Food extends React.Component {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {listFood}
+                                    {listFood}
                                 </tbody>
                             </Table>
                         </div>
@@ -74,7 +75,7 @@ class Food extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return { foods: state.foods };
+    return { foods: state.foodReducer.foodTodo.foods };
 };
 
 const mapDispatchToProps = (dispatch) => {

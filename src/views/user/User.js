@@ -80,6 +80,8 @@ class User extends React.Component {
         }).then((result) => {
             if (result.value) {
                 deleteServiceUser(id).then(response => {
+                    this.props.GetRemove(id);
+                    console.log(this.props.GetRemove(id))
                     // this.props.GetRemove(id)
                     if (response.status === 200) {
                         this.loadData();

@@ -9,7 +9,7 @@ const userTodo = (state = initialState, action) => {
         case "DELETE_USER":
             return {
                 ...state,
-                users: action.id
+                users: state.users.filter((users) => users.id !== action.id)
             }
         case 'EDIT_USER':
             return {

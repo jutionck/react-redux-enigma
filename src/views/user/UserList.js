@@ -24,6 +24,15 @@ class UserList extends Component {
                         >
                             <FontAwesomeIcon icon={faEdit} />
                         </Button>
+                        &nbsp;
+                        <Button
+                            className="btn btn-sm btn-circle btn-danger"
+                            onClick={(event) => {
+                                showDetails(user);
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faTrash} />
+                        </Button>
                     </td>
                 </tr>
             );

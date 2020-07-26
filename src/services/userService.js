@@ -1,33 +1,23 @@
 import axios from 'axios'
 
+const baseUrl = 'https://jsonplaceholder.typicode.com/users'
+
 const getServiceUsers = async () => {
-    let users = await axios.get('/user');
+    let users = await axios.get(baseUrl);
     return  users;
 };
 
 const createServiceUser = async (data) => {
-    let users = await axios.post('/user', data)
+    let users = await axios.post(baseUrl, data)
     return users;
 };
 
-const deleteServiceUser = async (id) => {
-    const users = await fetch('/user' + `/${id}`, {
-        method: 'DELETE',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-        }
-    })
-
-    return users;
-}
-
-const updateServiceUser = async (data) => {
-    let users = await axios.put('/user', data)
+const updateServiceUser = async (id, data) => {
+    let users = await axios.put(`https://jsonplaceholder.typicode.com/users/${id}`, data)
     return users;
 };
 
 
 
 
-export {getServiceUsers, createServiceUser, deleteServiceUser, updateServiceUser}
+export {getServiceUsers, createServiceUser, updateServiceUser}

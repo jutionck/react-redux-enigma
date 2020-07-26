@@ -30,6 +30,18 @@ class UserModal extends Component {
                 >
                     <Modal.Body>
                         <div className="form-group">
+                            <label htmlFor="username">Name</label>
+                            <input
+                                name="name"
+                                type="text"
+                                onChange={(event) => {
+                                    handleChange(event, "name");
+                                }}
+                                value={selectedUser["name"]}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
                             <label htmlFor="username">Username</label>
                             <input
                                 name="username"
@@ -42,42 +54,41 @@ class UserModal extends Component {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="username">Lastname</label>
+                            <label htmlFor="username">email</label>
                             <input
-                                name="firstName"
+                                name="email"
                                 type="text"
                                 onChange={(event) => {
-                                    handleChange(event, "firstName");
+                                    handleChange(event, "email");
                                 }}
-                                value={selectedUser["firstName"]}
+                                value={selectedUser["email"]}
                                 required
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="username">Lastname</label>
+                            <label htmlFor="username">phone</label>
                             <input
-                                name="lastName"
+                                name="phone"
                                 type="text"
                                 onChange={(event) => {
-                                    handleChange(event, "lastName");
+                                    handleChange(event, "phone");
                                 }}
-                                value={selectedUser["lastName"]}
+                                value={selectedUser["phone"]}
                                 required
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="username">Password</label>
+                            <label htmlFor="username">website</label>
                             <input
-                                name="password"
-                                type="password"
+                                name="website"
+                                type="text"
                                 onChange={(event) => {
-                                    handleChange(event, "password");
+                                    handleChange(event, "website");
                                 }}
-                                value={selectedUser["password"]}
+                                value={selectedUser["website"]}
                                 required
                             />
                         </div>
-
                     </Modal.Body>
                     <Modal.Footer>
                         <Button

@@ -11,10 +11,12 @@ class UserList extends Component {
             return (
                 <tr key={index}>
                     <td>{index+1}</td>
-                    <td>{user.userID}</td>
+                    <td>{user.id}</td>
+                    <td>{user.name}</td>
                     <td>{user.username}</td>
-                    <td>{user.firstName}</td>
-                    <td>{user.lastName}</td>
+                    <td>{user.email}</td>
+                    <td>{user.phone}</td>
+                    <td>{user.website}</td>
                     <td>
                         <Button
                             className="btn btn-sm btn-circle btn-info"
@@ -24,15 +26,7 @@ class UserList extends Component {
                         >
                             <FontAwesomeIcon icon={faEdit} />
                         </Button>
-                        &nbsp;
-                        <Button
-                            className="btn btn-sm btn-circle btn-danger"
-                            onClick={(event) => {
-                                showDetails(user);
-                            }}
-                        >
-                            <FontAwesomeIcon icon={faTrash} />
-                        </Button>
+
                     </td>
                 </tr>
             );
@@ -64,9 +58,11 @@ class UserList extends Component {
                                 <tr>
                                     <th>No</th>
                                     <th>UserID</th>
+                                    <th>Name</th>
                                     <th>Username</th>
-                                    <th>Firstname</th>
-                                    <th>Lastname</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Website</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>

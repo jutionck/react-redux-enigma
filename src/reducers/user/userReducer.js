@@ -6,11 +6,7 @@ const userTodo = (state = initialState, action) => {
     switch (action.type) {
         case "GET_USERS":
             return { ...state, users: action.data };
-        case "DELETE_USER":
-            return {
-                ...state,
-                users: state.users.filter((users) => users.id !== action.id)
-            }
+
         case 'EDIT_USER':
             return {
                 ...state,

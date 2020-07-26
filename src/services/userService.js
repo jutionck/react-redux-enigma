@@ -5,18 +5,10 @@ const getServiceUsers = async () => {
     return  users;
 };
 
-const userService = async (form) => {
-    const users = await fetch('/user', {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(form)
-    })
-
-    return await users.json()
-}
+const createServiceUser = async (data) => {
+    let users = await axios.post('/user', data)
+    return users;
+};
 
 const deleteServiceUser = async (id) => {
     const users = await fetch('/user' + `/${id}`, {
@@ -30,21 +22,12 @@ const deleteServiceUser = async (id) => {
     return users;
 }
 
-
-const updateServiceUser = async (form) => {
-    const users = await fetch('/user', {
-        method: 'PUT',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(form)
-    })
-
-    return await users.json();
-}
+const updateServiceUser = async (data) => {
+    let users = await axios.put('/user', data)
+    return users;
+};
 
 
 
 
-export {getServiceUsers, userService, deleteServiceUser, updateServiceUser}
+export {getServiceUsers, createServiceUser, deleteServiceUser, updateServiceUser}

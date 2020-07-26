@@ -37,20 +37,12 @@ class Food extends React.Component {
                         <li className="breadcrumb-item active" aria-current="page">Food List</li>
                     </ol>
                 </nav>
-                <div className="card">
-                    <div className="card-header bg-yellow">
-                        <div className="row">
-                            <div className="col">
-                                <strong> Food List </strong>
-                            </div>
-                            <div className="col text-right">
-
-                            </div>
-                        </div>
+                <div className="card shadow mb-4">
+                    <div className="card-header py-3">
+                        <h6 className="m-0 font-weight-bold text-primary">Food Lists</h6>
                     </div>
-                    <div className="card-body mb-3">
-                        {/*<Link to="/food/add" className="btn btn-yellow-2 mb-3"><FontAwesomeIcon icon={faPlus} /></Link>*/}
-                        <div className="embed-responsive">
+                    <div className="card-body">
+                        <div className="table-responsive">
                             <Table striped bordered hover>
                                 <thead>
                                 <tr>
@@ -63,7 +55,7 @@ class Food extends React.Component {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    {listFood}
+                                {listFood}
                                 </tbody>
                             </Table>
                         </div>

@@ -140,6 +140,7 @@ class User extends React.Component {
                     users={this.props.users}
                     showDetails={this.showDetails}
                     removeUser={this.removeUser}
+                    edited={this.state.edited}
                 />
                 <UserModal
                     handleChange={this.handleChange}

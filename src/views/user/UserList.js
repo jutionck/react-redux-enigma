@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 
 class UserList extends Component {
     render() {
-        const { users, showDetails, showModal, removeUser } = this.props;
+        const { users, showDetails, showModal, removeUser, edited } = this.props;
         let user = users.map((user, index) => {
             return (
                 <tr key={index}>
@@ -27,7 +27,7 @@ class UserList extends Component {
                         &nbsp;
                         <Button
                             className="btn btn-sm btn-circle btn-danger"
-                            onClick={removeUser(user.userID)}
+                            onClick={() => removeUser(user.userID)}
                         >
                             <FontAwesomeIcon icon={faTrash} />
                         </Button>

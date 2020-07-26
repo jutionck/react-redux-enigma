@@ -3,6 +3,7 @@ import '../assets/css/sb-admin-2.min.css'
 import '../assets/vendor/fontawesome-free/css/all.min.css'
 import {Redirect, withRouter, Switch, Route, Link} from "react-router-dom";
 import HomePage from "../views/HomePage";
+import Food from "../views/food/Food";
 import User from "../views/user/User";
 import LoginContainer from "../views/auth/LoginContainer";
 import NotFound from "../views/404/NotFound";
@@ -11,7 +12,8 @@ import {faBurn, faHome, faSignOutAlt, faUser} from "@fortawesome/free-solid-svg-
 
 const routes = [
     { id: 1, path:"/home", component: HomePage },
-    { id: 2, path:"/user", component: User },
+    { id: 2, path:"/food", component: Food },
+    { id: 3, path:"/user", component: User },
 ];
 
 class Template extends Component {
@@ -76,6 +78,11 @@ class Template extends Component {
                         <div className="sidebar-heading">
                             Main Menu
                         </div>
+                        <li className="nav-item">
+                            <Link to={"/food"} className="nav-link">
+                                <FontAwesomeIcon icon={faBurn}/> <span>Foods</span>
+                            </Link>
+                        </li>
                         <li className="nav-item">
                             <Link to={"/user"} className="nav-link">
                                 <FontAwesomeIcon icon={faUser}/> <span>user</span>

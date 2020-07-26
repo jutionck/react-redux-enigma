@@ -1,11 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import Table from "react-bootstrap/Table";
-import {createServiceUser, getServiceUsers, updateServiceUser} from "../../services/userService";
-import  {faPlus,faEdit, faTrash} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {deleteServiceUser, getServiceUsers, createServiceUser, updateServiceUser} from "../../services/userService";
 import Swal from 'sweetalert2'
-import UserAddForm from "./UserAddForm";
 import UserList from "./UserList";
 import UserModal from "./UserModal";
 
@@ -14,76 +10,22 @@ class User extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            users : [],
             showDetails: false,
             selectedUser: {
-                id:""
+                userID:""
             },
-            edited: true,
-                userEdit: {
-                    id:"",
-                    name: "",
-                    username: "",
-                    email: "",
-                    address : {
-                        street: "",
-                        suite: "",
-                        city: "",
-                        zipcode: "",
-                        geo : {
-                            lat: "",
-                            lng: ""
-                        }
-                    },
-                    phone: "",
-                    website: "",
-                    company: {
-                        name: "",
-                        catchPhrase: "",
-                        bs: ""
-                    }
-                },
-            userID: "",
-            username: "",
-            firstName: "",
-            lastName: "",
-            password: "",
-            isLoading: true
+            edited: true
         }
     }
 
 
     loadData = () => {
         getServiceUsers().then(res => {
-            const users = res.data;
+            const users = res.data.data;
             this.props.GetUser(users);
         })
     }
 
-    onSubmit = async () => {
-        const form = {
-            username: this.state.username,
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            password: this.state.password
-        }
-        createServiceUser(form).then(res => {
-            if(res.status === 200) {
-                Swal.fire(
-                    'Good job!',
-                    'Create User Success!',
-                    'success'
-                ).then(r => {
-                    this.setState({
-                        username: "",
-                        firstName: "",
-                        lastName: "",
-                        password: ""
-                    })
-                })
-            }
-        })
-    }
     showModal = () => {
         this.setState({
             ...this.state,
@@ -124,29 +66,33 @@ class User extends React.Component {
         if (this.state.edited === true) {
             createServiceUser(this.state.selectedUser)
                 .then((res) => {
-                    Swal.fire(
-                        'Good job!',
-                        'Create User Success!',
-                        'success'
-                    ).then(r => {
-                        this.hideDetails();
-                        this.loadData();
-                    })
+                    if (res.data.status === 200) {
+                        Swal.fire(
+                            'Good job!',
+                            'Create User Success!',
+                            'success'
+                        ).then(r => {
+                            this.hideDetails();
+                            this.loadData();
+                        })
+                    }
                 })
                 .catch((error) => {
                     console.error(error);
                 });
         } else {
-            updateServiceUser(this.state.selectedUser.id,this.state.selectedUser)
+            updateServiceUser(this.state.selectedUser.userID,this.state.selectedUser)
                 .then((res) => {
-                    Swal.fire(
-                        'Good job!',
-                        'Update User Success!',
-                        'success'
-                    ).then(r => {
-                        this.hideDetails();
-                        this.loadData();
-                    })
+                    if (res.data.status === 200) {
+                        Swal.fire(
+                            'Good job!',
+                            'Update User Success!',
+                            'success'
+                        ).then(r => {
+                            this.hideDetails();
+                            this.loadData();
+                        })
+                    }
                 })
                 .catch((error) => {
                     console.error(error);
@@ -158,6 +104,33 @@ class User extends React.Component {
         this.loadData()
     }
 
+    removeUser = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                deleteServiceUser(id).then(response => {
+                    this.props.GetRemove(id);
+                    console.log(this.props.GetRemove(id))
+                    // this.props.GetRemove(id)
+                    if (response.status === 200) {
+                        this.loadData();
+                    }
+                })
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+            }
+        })
+    }
 
     render() {
         return (
@@ -166,6 +139,7 @@ class User extends React.Component {
                     showModal={this.showModal}
                     users={this.props.users}
                     showDetails={this.showDetails}
+                    removeUser={this.removeUser}
                 />
                 <UserModal
                     handleChange={this.handleChange}
@@ -186,7 +160,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        GetUser: (data) => dispatch({ type: "GET_USERS", data: data })
+        GetUser: (data) => dispatch({ type: "GET_USERS", data: data }),
+        GetRemove: (id) => dispatch({ type: "DELETE_USER", data: id }),
     };
 };
 

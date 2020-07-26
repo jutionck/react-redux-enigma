@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
+import foodReducer from "./food";
 import userReducer from "./user";
 
 
 const rootReducer = combineReducers({
-    userReducer: userReducer
+    foodReducer: foodReducer,
+    userReducer: userReducer    ,
 });
 
 export default rootReducer;

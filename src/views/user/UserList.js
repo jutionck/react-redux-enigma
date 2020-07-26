@@ -6,17 +6,15 @@ import Button from "react-bootstrap/Button";
 
 class UserList extends Component {
     render() {
-        const { users, showDetails, showModal } = this.props;
+        const { users, showDetails, showModal, removeUser } = this.props;
         let user = users.map((user, index) => {
             return (
                 <tr key={index}>
                     <td>{index+1}</td>
-                    <td>{user.id}</td>
-                    <td>{user.name}</td>
+                    <td>{user.userID}</td>
                     <td>{user.username}</td>
-                    <td>{user.email}</td>
-                    <td>{user.phone}</td>
-                    <td>{user.website}</td>
+                    <td>{user.firstName}</td>
+                    <td>{user.lastName}</td>
                     <td>
                         <Button
                             className="btn btn-sm btn-circle btn-info"
@@ -26,7 +24,13 @@ class UserList extends Component {
                         >
                             <FontAwesomeIcon icon={faEdit} />
                         </Button>
-
+                        &nbsp;
+                        <Button
+                            className="btn btn-sm btn-circle btn-danger"
+                            onClick={removeUser(user.userID)}
+                        >
+                            <FontAwesomeIcon icon={faTrash} />
+                        </Button>
                     </td>
                 </tr>
             );
@@ -58,11 +62,9 @@ class UserList extends Component {
                                 <tr>
                                     <th>No</th>
                                     <th>UserID</th>
-                                    <th>Name</th>
                                     <th>Username</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Website</th>
+                                    <th>Firstname</th>
+                                    <th>Lastname</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>

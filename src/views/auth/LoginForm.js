@@ -25,7 +25,7 @@ class LoginForm extends Component {
                             <div className="col-lg-6">
                                 <div className="card2 card border-0 px-4 py-5">
                                     <div className="row mb-4 px-3 mb-5">
-                                        <h6 className="mb-0 mr-4 mt-2">Sign with your account</h6>
+                                        <h6 className="mb-0 mr-4 mt-2">Sign in with your account</h6>
                                     </div>
                                     <form
                                         method="post"
@@ -79,7 +79,7 @@ class LoginForm extends Component {
                                             {/*<a href="#" className="ml-auto mb-0 text-sm">Forgot Password?</a>*/}
                                         </div>
                                         <div className="row mb-3 px-3">
-                                            <button type="submit" className="btn btn-yellow text-center">
+                                            <button type="submit" className="btn btn-blue text-center">
                                                 Login
                                             </button>
                                         </div>
@@ -93,7 +93,7 @@ class LoginForm extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-yellow py-4">
+                        <div className="bg-blue py-4">
                             <div className="row px-3">
                                 <small className="ml-4 ml-sm-5 mb-2">Copyright &copy; 2020. All rights reserved.</small>
                             </div>

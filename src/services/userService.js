@@ -1,50 +1,23 @@
 import axios from 'axios'
 
+const baseUrl = 'https://jsonplaceholder.typicode.com/users'
+
 const getServiceUsers = async () => {
-    let users = await axios.get('/user');
+    let users = await axios.get(baseUrl);
     return  users;
 };
 
-const userService = async (form) => {
-    const users = await fetch('/user', {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(form)
-    })
-
-    return await users.json()
-}
-
-const deleteServiceUser = async (id) => {
-    const users = await fetch('/user' + `/${id}`, {
-        method: 'DELETE',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-        }
-    })
-
+const createServiceUser = async (data) => {
+    let users = await axios.post(baseUrl, data)
     return users;
-}
+};
 
-
-const updateServiceUser = async (form) => {
-    const users = await fetch('/user', {
-        method: 'PUT',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(form)
-    })
-
-    return await users.json();
-}
+const updateServiceUser = async (id, data) => {
+    let users = await axios.put(`https://jsonplaceholder.typicode.com/users/${id}`, data)
+    return users;
+};
 
 
 
 
-export {getServiceUsers, userService, deleteServiceUser, updateServiceUser}
+export {getServiceUsers, createServiceUser, updateServiceUser}

@@ -14,13 +14,18 @@ const userTodo = (state = initialState, action) => {
         case 'EDIT_USER':
             return {
                 ...state,
-                users: state.map((users) => users.id === action.id ? { ...state, users: action.data } : users)
+                users: state.map((users) => users.id === action.id ? {...users ,editing:!users.editing}:users)
             }
         case 'UPDATE':
-            return state.map((users) => {
-                if (users.id === action.id) {
-                    return { ...state, users: action.data };
-                } else return state;
+            return state.map((user)=>{
+                console.log(user)
+                if(user.id === action.id) {
+                    return {
+                        ...user,
+                        users: action.data,
+                        editing: !user.editing
+                    }
+                } else return user;
             })
         default:
             return state;

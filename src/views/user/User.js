@@ -66,16 +66,15 @@ class User extends React.Component {
         if (this.state.edited === true) {
             createServiceUser(this.state.selectedUser)
                 .then((res) => {
-                    if (res.data.status === 200) {
-                        Swal.fire(
-                            'Good job!',
-                            'Create User Success!',
-                            'success'
-                        ).then(r => {
-                            this.hideDetails();
-                            this.loadData();
-                        })
-                    }
+                    Swal.fire(
+                        'Good job!',
+                        'Create User Success!',
+                        'success'
+                    ).then(r => {
+                        this.hideDetails();
+                        this.loadData();
+                    })
+
                 })
                 .catch((error) => {
                     console.error(error);

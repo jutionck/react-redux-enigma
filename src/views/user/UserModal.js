@@ -9,7 +9,6 @@ class UserModal extends Component {
             hideDetails,
             selectedUser,
             createUser,
-            edited,
         } = this.props;
         return (
             <Modal show={showDetails}>

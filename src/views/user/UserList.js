@@ -6,7 +6,16 @@ import Button from "react-bootstrap/Button";
 
 class UserList extends Component {
     render() {
-        const { users, showDetails, showModal } = this.props;
+        const { users, showDetails, showModal, isLoading, removeUser} = this.props;
+
+        if(isLoading) {
+            return <div className="d-flex justify-content-center">
+                <div className="spinner-border text-primary" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
+            </div>
+        }
+
         let user = users.map((user, index) => {
             return (
                 <tr key={index}>
@@ -26,6 +35,13 @@ class UserList extends Component {
                         >
                             <FontAwesomeIcon icon={faEdit} />
                         </Button>
+                        &nbsp;
+                        <Button
+                            className="btn btn-sm btn-circle btn-danger"
+                            onClick={() => removeUser(user.id)}
+                        >
+                            <FontAwesomeIcon icon={faTrash} />
+                        </Button>
 
                     </td>
                 </tr>
@@ -39,6 +55,31 @@ class UserList extends Component {
                         <li className="breadcrumb-item active" aria-current="page">User List</li>
                     </ol>
                 </nav>
+
+                <div className="card shadow mb-4">
+                    <div className="card-body">
+                        <div className="list row">
+                            <div className="col-md-8">
+                                <div className="input-group mb-3">
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Search by title"
+                                    />
+                                    <div className="input-group-append">
+                                        <button
+                                            className="btn btn-outline-secondary"
+                                            type="button"
+                                        >
+                                            Search
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div className="card shadow mb-4">
                     <div className="card-header py-3">
                         <h6 className="m-0 font-weight-bold text-primary">User Lists</h6>
@@ -67,6 +108,7 @@ class UserList extends Component {
                                 </tr>
                                 </thead>
                                 <tbody>
+                                    {}
                                     {user}
                                 </tbody>
                             </Table>

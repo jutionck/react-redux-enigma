@@ -7,6 +7,11 @@ const getServiceUsers = async () => {
     return  users;
 };
 
+const getServiceUserById = async (id) => {
+    let users = await axios.get(`https://jsonplaceholder.typicode.com/users/${id}`);
+    return  users;
+};
+
 const createServiceUser = async (data) => {
     let users = await axios.post(baseUrl, data)
     return users;
@@ -17,7 +22,12 @@ const updateServiceUser = async (id, data) => {
     return users;
 };
 
+const deleteServiceUser = async (id) => {
+    let users = await axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`)
+    return users;
+};
 
 
 
-export {getServiceUsers, createServiceUser, updateServiceUser}
+
+export {getServiceUsers, getServiceUserById, createServiceUser, updateServiceUser, deleteServiceUser}

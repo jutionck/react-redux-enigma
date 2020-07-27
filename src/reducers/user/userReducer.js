@@ -5,19 +5,18 @@ const initialState = {
 const userTodo = (state = initialState, action) => {
     switch (action.type) {
         case "GET_USERS":
-            return { ...state, users: action.data };
-
-        case 'EDIT_USER':
+            return { ...state, users: action.data }
+        case "ADD_USER":
             return {
-                ...state,
-                users: state.map((users) => users.id === action.id ? { ...users, editing: !users.editing } : users)
+                ...state, users: [...state.users, action.data]
             }
-        case 'UPDATE':
-            return state.map((users) => {
-                if (users.id === action.id) {
-                    return { ...state, users: action.data };
-                } else return state;
-            })
+        case "DELETE_USER":
+            // state.users.filter((users) => users.id !== action.id)
+            return state
+        case 'UPDATE_USER':
+            if (state.users.id === action.id) {
+                return { ...state, users: [...state.users, action.data] };
+            } else return state;
         default:
             return state;
     }

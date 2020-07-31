@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
-import userReducer from "./user";
+import latestReducer from "./latest";
+import historyReducer from "./history";
 
 
 const rootReducer = combineReducers({
-    userReducer: userReducer
+    latestReducer: latestReducer,
+    historyReducer: historyReducer
 });
 
 export default rootReducer;

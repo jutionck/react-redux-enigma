@@ -1,37 +1,32 @@
-import React, {Component} from 'react';
+import React, { useState } from 'react';
 import LoginForm from "./LoginForm";
 import Swal from 'sweetalert2'
 
-class LoginContainer extends Component {
-    constructor(pros) {
-        super(pros);
-        this.state = {
-            auth : {
-                username: "admin",
-                password: "admin"
-            }
-        }
+function LoginContainer (props) {
+
+    const initialStateAuth = {
+        username: 'admin',
+        password: 'admin'
     }
 
-    handleChangeInput = (event, field) => {
-        let { auth } = this.state;
-        auth[field] = event.target.value;
-        this.setState({ auth });
-        console.log(this.state.auth);
+    const [auth, setAuth] = useState(initialStateAuth)
+
+    const handleChangeInput = (event, field) => {
+        const { name, value } = event.target;
+        setAuth({ ...auth, [field]: value });
     }
 
     // belum api
-    loginProses = (event) => {
+    const loginProses = (event) => {
         event.preventDefault();
-        if(this.state.auth.username === 'admin' && this.state.auth.password === 'admin') {
+        if(auth.username === 'admin' && auth.password === 'admin') {
             Swal.fire(
                 'Good job!',
                 'Login Success!',
                 'success'
             ).then(r => {
                 sessionStorage.setItem("auth-token", "12345");
-                this.props.onLogin();
-                this.clearFormLogin();
+                props.onLogin()
             })
         } else {
             Swal.fire({
@@ -40,27 +35,21 @@ class LoginContainer extends Component {
                 icon: 'error',
                 confirmButtonText: 'Ok'
             }).then(r => {
-                this.clearFormLogin();
+
             })
         }
     }
 
-    clearFormLogin = () => {
-        this.setState({ ...this.state, auth: { username: "", password: "" } });
-    };
+    return (
+        <>
+            <LoginForm
+                auth={auth}
+                handleChangeInput={handleChangeInput}
+                loginProses={loginProses}
+            />
 
-    render() {
-        return (
-            <>
-                <LoginForm
-                    auth={this.state.auth}
-                    handleChangeInput={this.handleChangeInput}
-                    loginProses={this.loginProses}
-                />
-
-            </>
-        );
-    }
+        </>
+    );
 }
 
 export default LoginContainer;

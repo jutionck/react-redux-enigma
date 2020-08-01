@@ -4,15 +4,18 @@ import '../assets/vendor/fontawesome-free/css/all.min.css'
 import {Redirect, withRouter, Switch, Route, Link} from "react-router-dom";
 import HomePage from "../views/HomePage";
 import Latest from "../container/Latest";
+import History from "../container/History";
 import LoginContainer from "../views/auth/LoginContainer";
 import NotFound from "../views/404/NotFound";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faHistory, faHome, faMoneyBill, faSignOutAlt, faUser} from "@fortawesome/free-solid-svg-icons";
+import HistoryDetail from "../container/HistoryDetail";
 
 const routes = [
     { id: 1, path:"/home", component: HomePage },
     { id: 2, path:"/latest", component: Latest },
-    { id: 3, path:"/history", component: Latest },
+    { id: 3, path:"/history", component: History },
+    { id: 4, path:"/details/:id", component: HistoryDetail },
 ];
 
 function Template (props) {

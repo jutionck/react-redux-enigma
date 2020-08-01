@@ -7,8 +7,9 @@ import {
     getServiceLatestBase,
     getServiceLatestBaseChange
 } from "../services/exchangeRateService";
+import LatestSearch from "../views/latest/LatestSearch";
 
-function Latest () {
+function Latest (props) {
 
     const initialSearchState = {
         searchLatest: "",
@@ -16,14 +17,15 @@ function Latest () {
         searchSymbol: ""
     }
 
+    const [latest, getLatest] = useState([]);
     const [loading, isLoading] = useState(false)
     const [search, setSearch] = useState(initialSearchState)
 
 
-    const loadData = (props) => {
+    const loadData = () => {
         getServiceLatest().then(res => {
-            const latest = res.data
-            props.GetLatest(latest);
+            props.GetLatest(getLatest(res.data));
+            console.log(props.GetLatest)
             isLoading(false)
         })
     }
@@ -33,69 +35,56 @@ function Latest () {
     }, []);
 
     const onChangeSearchLatest = (e, field) => {
-        const { name, value } = e.target;
+        const { value } = e.target;
         setSearch({ ...search, [field]: value });
-        let searchLatest = e.target.name;
-        let searchBase = e.target.name;
-        let searchSymbol = e.target.name;
-        setSearchLatest( ...searchLatest, [searchLatest]: e.target.value)
-        this.setState({
-            ...this.state,
-            ...this.state.searchLatest, ,
-            ...this.state.searchBase, [searchBase]: e.target.value,
-            ...this.state.searchSymbol, [searchSymbol]: e.target.value,
-        });
+        console.log(search)
     }
 
-    searchLatest = () => {
-        if(this.state.searchLatest !== '' && this.state.searchBase !== '') {
-            getServiceLatestBaseChange(this.state.searchLatest, this.state.searchBase)
+    const searchLatest = () => {
+        if(search.searchLatest !== '' && search.searchBase !== '') {
+            getServiceLatestBaseChange(search.searchLatest, search.searchBase)
                 .then(response => {
+                    getLatest(response.data);
                     const latest = response.data;
-                    this.props.GetLatest(latest);
-                    this.setState({
-                        ...this.state, isLoading: false
-                    })
-                    console.log(response.data);
+                    props.GetLatest(latest);
+                    isLoading(false)
+                    console.log(response)
                 })
                 .catch(e => {
                     console.log(e);
                 });
-        } else if(this.state.searchLatest !== '') {
-            getServiceLatest(this.state.searchLatest)
+        } else if(search.searchLatest !== '') {
+            getServiceLatest(search.searchLatest)
                 .then(response => {
+                    getLatest(response.data);
                     const latest = response.data;
-                    this.props.GetLatest(latest);
-                    this.setState({
-                        ...this.state, isLoading: false
-                    })
-                    console.log(response.data);
+                    props.GetLatest(latest);
+                    isLoading(false)
+                    console.log(response)
                 })
                 .catch(e => {
                     console.log(e);
                 });
-        } else if(this.state.searchBase !== '') {
-            getServiceLatestBase(this.state.searchBase)
+        } else if(search.searchBase !== '') {
+            getServiceLatestBase(search.searchBase)
                 .then(response => {
+                    getLatest(response.data);
                     const latest = response.data;
-                    this.props.GetLatest(latest);
-                    this.setState({
-                        ...this.state, isLoading: false
-                    })
-                    console.log(response.data);
+                    props.GetLatest(latest);
+                    isLoading(false)
+                    console.log(response)
                 })
                 .catch(e => {
                     console.log(e);
                 });
-        } else if(this.state.searchSymbol !== '') {
-            getServiceExChangeSymbol(this.state.searchSymbol)
+        } else if(search.searchSymbol !== '') {
+            getServiceExChangeSymbol(search.searchSymbol)
                 .then(response => {
+                    getLatest(response.data);
                     const latest = response.data;
-                    this.props.GetLatest(latest);
-                    this.setState({
-                        ...this.state, isLoading: false
-                    })
-                    console.log(response.data);
+                    props.GetLatest(latest);
+                    isLoading(false)
+                    console.log(response)
                 })
                 .catch(e => {
                     console.log(e);
@@ -104,59 +93,19 @@ function Latest () {
 
     }
 
-    render() {
-        return (
-            <>
-                <div className="card shadow mb-4">
-                    <div className="card-body">
-                        <div className="list row">
-                            <div className="col-md-12">
-                                <div className="input-group mb-3">
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="Search base"
-                                        name="searchBase"
-                                        value={this.state.searchBase}
-                                        onChange={this.onChangeSearchLatest}
-                                    />
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="Search date"
-                                        name="searchLatest"
-                                        value={this.state.searchLatest}
-                                        onChange={this.onChangeSearchLatest}
-                                    />
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="Search symbol"
-                                        name="searchSymbol"
-                                        value={this.state.searchSymbol}
-                                        onChange={this.onChangeSearchLatest}
-                                    />
-                                    <div className="input-group-append">
-                                        <button
-                                            className="btn btn-outline-secondary"
-                                            type="button"
-                                            onClick={this.searchLatest}
-                                        >
-                                            Search
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <LatestList
-                    latest={this.props.latest}
-                    isLoading={this.state.isLoading}
-                />
-            </>
-        );
-    }
+    return (
+        <>
+            <LatestSearch
+                search={search}
+                searchLatest={searchLatest}
+                onChangeSearchLatest={onChangeSearchLatest}
+            />
+            <LatestList
+                latest={latest}
+                loading={loading}
+            />
+        </>
+    );
 }
 
 const mapStateToProps = (state) => {

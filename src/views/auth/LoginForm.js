@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import logo from '../../logo.svg';
+import React from 'react';
+import logo from '../../logoo.svg';
 import foodImg from '../../undraw_digital_currency_qpak.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Login.css';

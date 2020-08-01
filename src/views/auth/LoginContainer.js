@@ -12,7 +12,7 @@ function LoginContainer (props) {
     const [auth, setAuth] = useState(initialStateAuth)
 
     const handleChangeInput = (event, field) => {
-        const { name, value } = event.target;
+        const { value } = event.target;
         setAuth({ ...auth, [field]: value });
     }
 
